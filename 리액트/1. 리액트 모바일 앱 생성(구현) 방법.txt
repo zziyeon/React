@@ -28,3 +28,6 @@
 		import App from './src/App';
 		export default App;
 	웹 화면에서 결과 확인 (기존 화면과 같은 화면이 나타나는지)
+13. 로컬 저장소 asyncstorage
+	npm install @react-native-async-storage/async-storage
+14. expo install expo-app-loading
