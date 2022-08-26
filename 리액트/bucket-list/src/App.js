@@ -3,9 +3,10 @@ import styled, { ThemeProvider } from 'styled-components/native';
 import theme from './theme';
 import Input from './components/Input';
 import Task from './components/Task';
-import { Dimensions } from 'react-native';
+import { Button, Dimensions, ProgressViewIOSComponent } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
+
 
 
 const Container = styled.SafeAreaView`
@@ -32,6 +33,28 @@ const Title = styled.Text`
     margin:10px 20px 5px;
 `;
 
+// ========================
+// 버튼
+
+
+const ButtonContainer = styled.TouchableOpacity`
+    /* width:${({ width }) => width - 40}px; */
+    /* width: 500px; */
+`;
+const Title1 = styled.Text`
+    width:${({ width }) => width - 40}px;
+    height:50px;
+    color: ${({ theme }) => theme.title};
+    text-align: center;
+    font-size: 30px;
+    font-weight: 400;
+    color: ${({ theme }) => theme.title};
+    align-self: flex-start;
+    margin:10px 20px 5px;
+`;
+// ========================
+
+
 // // 전체 삭제 버튼
 // const Title1 = styled.Text`
 //     width: 335px;
@@ -57,6 +80,7 @@ export default function App() {
     const [isReady, setIsReady] = useState(false);  //앱 실행준비 상태
     const [newTask, setNewTask] = useState('');    //새로운 항목
     const [tasks, setTasks] = useState({});         //항목 리스트
+    
     
     //로컬저장소에 데이터 저장하기
     const storeData = async (key, value) => {
@@ -87,7 +111,6 @@ export default function App() {
         } catch (e) {
             // remove error
         }
-
         console.log('항목삭제:' + key);
     }
 
@@ -111,7 +134,7 @@ export default function App() {
         };
         setNewTask('');
         // setTasks({...tasks, ...newTaskObject});
-        storeData('tasks', { ...tasks, ...newTaskObject });  //로컬저장소에 저장
+        storeData('tasks', { ...tasks, ...newTaskObject});  //로컬저장소에 저장
     };
 
     // 삭제
@@ -136,6 +159,10 @@ export default function App() {
         // setTasks(currentTasks); //tasks = currentTasks;
         storeData('tasks', currentTasks);  //로컬저장소에 저장
     }
+
+    // const _allDeleteTask = item => {
+    //     const 
+    // }
 
     //입력필드에 포커스가 떠났을때
     const _onBlur = () => {
@@ -176,8 +203,13 @@ export default function App() {
                                                         updateTask={_updateTask} />)
                     }
                 </List>
+                <ButtonContainer width={width}>
+                    <Title1 width={width}>완료 항목 전체 삭제</Title1>
+                </ButtonContainer>
+                {/* <Button1 width={width} title='완료 항목 전체 삭제'  /> */}
                 {/* <All_delete width={width}>완료 항목 전체 삭제</All_delete> */}
             </Container>
         </ThemeProvider>
     );
 }
+
