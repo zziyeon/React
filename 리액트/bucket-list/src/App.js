@@ -122,8 +122,16 @@ export default function App() {
 
     //완료 항목 전체 삭제
     const _delAllTask = ()=>{
+        const currentTasks = {...tasks};
+
+        //완료 항목
+        const completedTasks = Object.entries(currentTasks).filter(tasks=>tasks[1].completed==true);
+
+        //완료 항목이 없는 경우 확인창 띄우지 않음.
+        if(completedTasks.length <1) return ;
+        
         const deleteCompletedItems = () => {
-            const currentTasks = {...tasks};
+            //미완료항목
             const filteredTasks =Object.fromEntries(Object.entries(currentTasks).filter(tasks=>tasks[1].completed==false));
             storeData('tasks',filteredTasks);
         }
