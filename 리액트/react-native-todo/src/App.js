@@ -20,7 +20,7 @@ const Title = styled.Text`
   font-size: 40px;
   font-weight: 600;
   color: ${({ theme }) => theme.main};
-  align-self: flex-start;
+  align-self: center;
   margin:0 20px;
 `;
 

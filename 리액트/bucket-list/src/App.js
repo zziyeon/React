@@ -6,7 +6,7 @@ import Task from './components/Task';
 import { Button, Dimensions, ProgressViewIOSComponent } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
-
+import ButtonContainer from './components/ButtonContainer';
 
 
 const Container = styled.SafeAreaView`
@@ -21,15 +21,13 @@ const Title = styled.Text`
     width:${({ width }) => width - 40}px;
     height:50px;
     background-color: ${({ theme }) => theme.itemBackground};
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-
     text-align: center;
+    /* vertical-align: middle; */
+    /* line-height: 60px; */
+    padding: 10px;
     font-size: 30px;
     font-weight: 400;
     color: ${({ theme }) => theme.title};
-    align-self: flex-start;
     margin:10px 20px 5px;
 `;
 
@@ -37,21 +35,12 @@ const Title = styled.Text`
 // 버튼
 
 
-const ButtonContainer = styled.TouchableOpacity`
-    /* width:${({ width }) => width - 40}px; */
-    /* width: 500px; */
-`;
-const Title1 = styled.Text`
-    width:${({ width }) => width - 40}px;
-    height:50px;
-    color: ${({ theme }) => theme.title};
-    text-align: center;
-    font-size: 30px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.title};
-    align-self: flex-start;
-    margin:10px 20px 5px;
-`;
+const ButtonContainer1 = styled.View`
+    width:${({ width }) => width - 40}px; 
+    width: 500px;
+ `;
+
+
 // ========================
 
 
@@ -80,6 +69,7 @@ export default function App() {
     const [isReady, setIsReady] = useState(false);  //앱 실행준비 상태
     const [newTask, setNewTask] = useState('');    //새로운 항목
     const [tasks, setTasks] = useState({});         //항목 리스트
+    const [isfinish, setisFinishTasks] = useState({});      //완료 항목 리스트
     
     
     //로컬저장소에 데이터 저장하기
@@ -160,9 +150,14 @@ export default function App() {
         storeData('tasks', currentTasks);  //로컬저장소에 저장
     }
 
-    // const _allDeleteTask = item => {
-    //     const 
-    // }
+    // ======================================
+    const _allDeleteTask = item => {
+        const currentTasks = { ...tasks };   //객체 복사
+        delete currentTasks[id];
+        setTasks(currentTasks);
+        console.log('완료 전체 삭제 버튼 눌림'+currentTasks);
+        }
+        // ======================================
 
     //입력필드에 포커스가 떠났을때
     const _onBlur = () => {
@@ -192,7 +187,8 @@ export default function App() {
                     value={newTask}
                     onChangeText = {_handleTextChange}
                     onSubmitEditing = {_addTask}
-                    onBlur={_onBlur} />
+                    onBlur={_onBlur}
+                    blurOnSubmit={false} />
                 <List width={width}>
                     {Object.values(tasks)
                         .reverse()
@@ -204,10 +200,8 @@ export default function App() {
                     }
                 </List>
                 <ButtonContainer width={width}>
-                    <Title1 width={width}>완료 항목 전체 삭제</Title1>
+                    {/* <Title1 width={width}>완료 항목 전체 삭제</Title1> */}
                 </ButtonContainer>
-                {/* <Button1 width={width} title='완료 항목 전체 삭제'  /> */}
-                {/* <All_delete width={width}>완료 항목 전체 삭제</All_delete> */}
             </Container>
         </ThemeProvider>
     );

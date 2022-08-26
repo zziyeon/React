@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import IconButton from './IconButton';
 import {images} from '../images';
 import Input from './Input';
-
+import { Button } from "react-native";
 const Container = styled.View`
     flex-direction: row;
     align-items: center;
@@ -20,7 +20,7 @@ const Contents = styled.Text`
   text-decoration: ${({completed})=> completed ? 'line-through' : 'none'};
 `;
 
-const Task = ({item, deleteTask, toggleTask, updateTask})=> {
+const Task = ({item, deleteTask, toggleTask, updateTask, allDeleteTask})=> {
     const [isEditing, setIsEditing] = useState(false);
     const [text, setText] = useState(item.text);
 
@@ -36,6 +36,16 @@ const Task = ({item, deleteTask, toggleTask, updateTask})=> {
     const _handleUpdateButtonPress = ()=>{
         setIsEditing(true);
     }
+
+    //=================================
+    //완료 항목 전체 삭제 클릭시
+    // const _allDeleteBtnPress = () {
+    //     if(item.completed){
+
+    //     }
+    // }
+
+    //=================================
 
     return isEditing ? (
         <Input
@@ -61,6 +71,10 @@ const Task = ({item, deleteTask, toggleTask, updateTask})=> {
                                 id={item.id}
                                 onPressOut={deleteTask}
                                 completed={item.completed}  />
+            {/* <ButtonContainer 
+        
+            onPressOut={allDeleteTask} /> */}
+            {item.completed}
         </Container>
     );
 };
@@ -69,6 +83,7 @@ Task.propTypes = {
     task:PropTypes.object.isRequired,
     deleteTask: PropTypes.func.isRequired,
     toggleTask: PropTypes.func.isRequired,
+    // allDeleteTask: PropTypes.func.isRequired
   }
 
   export default Task;
